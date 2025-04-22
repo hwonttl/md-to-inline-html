@@ -27,7 +27,7 @@ Export your Obsidian notes to clean, inline-style HTML – perfect for pasting i
 
 - **Exclude YAML Frontmatter**
   - Enable or disable the removal of `---` frontmatter block.
-  - Go to `Settings → Plugin Options → md-to-inline-html`
+  - Go to `Settings → Plugin Options → Markdown to Inline HTML`
 
 ---
 
