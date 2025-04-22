@@ -1,0 +1,11 @@
+{
+	"id": "md-to-inline-html",
+	"name": "Markdown to Inline HTML",
+	"version": "1.0.0",
+	"minAppVersion": "0.15.0",
+	"description": "Converts Markdown to Inline HTML.",
+	"author": "Alan Jang",
+	"authorUrl": "https://github.com/hwonttl",
+	"fundingUrl": "https://obsidian.md/pricing",
+	"isDesktopOnly": false
+}
