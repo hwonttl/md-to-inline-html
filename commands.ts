@@ -5,8 +5,8 @@ import { convertMarkdownToInlineHtml } from "./converter";
 
 import { copyToClipboard } from "./clipboard";
 
-export function registerExportCommands(plugin: Plugin ) {
-  const ourPlugin = plugin as MarkdownToInlineHtmlPlugin;
+export function registerExportCommands(plugin: Plugin) {
+	const ourPlugin = plugin as MarkdownToInlineHtmlPlugin;
 
 	const app = ourPlugin.app;
 
@@ -26,6 +26,8 @@ export function registerExportCommands(plugin: Plugin ) {
 				? markdown.replace(/^---\s*[\r\n]+[\s\S]*?^---\s*[\r\n]+/m, "")
 				: markdown;
 
+			console.log("content: " + content);
+
 			const html = await convertMarkdownToInlineHtml(
 				content,
 				app,
@@ -36,36 +38,37 @@ export function registerExportCommands(plugin: Plugin ) {
 		},
 	});
 
-	ourPlugin.addCommand({
-		id: "export-selection-as-inline-html",
-		name: "Export selected block as inline-style HTML",
-		callback: async () => {
-			const file = ourPlugin.app.workspace.getActiveFile();
-			if (!file) {
-				new Notice("⚠️ No active file.");
-				return;
-			}
+	// 선택영역 변환 시 동적 렌더링 부분은 반영이 안되므로 제외
+	// ourPlugin.addCommand({
+	// 	id: "export-selection-as-inline-html",
+	// 	name: "Export selected block as inline-style HTML",
+	// 	callback: async () => {
+	// 		const file = ourPlugin.app.workspace.getActiveFile();
+	// 		if (!file) {
+	// 			new Notice("⚠️ No active file.");
+	// 			return;
+	// 		}
 
-			// 🔍 현재 뷰가 마크다운 편집기인지 확인
-			const view = ourPlugin.app.workspace.getActiveViewOfType(MarkdownView);
-			if (!view || !view.editor) {
-				new Notice("⚠️ This command works only in editing mode.");
-				return;
-			}
+	// 		// 🔍 현재 뷰가 마크다운 편집기인지 확인
+	// 		const view = ourPlugin.app.workspace.getActiveViewOfType(MarkdownView);
+	// 		if (!view || !view.editor) {
+	// 			new Notice("⚠️ This command works only in editing mode.");
+	// 			return;
+	// 		}
 
-			const selection = view.editor.getSelection().trim();
-			if (!selection) {
-				new Notice("⚠️ No text selected.");
-				return;
-			}
+	// 		const selection = view.editor.getSelection().trim();
+	// 		if (!selection) {
+	// 			new Notice("⚠️ No text selected.");
+	// 			return;
+	// 		}
 
-			const html = await convertMarkdownToInlineHtml(
-				selection,
-				app,
-				file.path
-			);
-			await copyToClipboard(html);
-			new Notice("✅ Selected block copied as inline HTML!");
-		},
-	});
+	// 		const html = await convertMarkdownToInlineHtml(
+	// 			selection,
+	// 			app,
+	// 			file.path
+	// 		);
+	// 		await copyToClipboard(html);
+	// 		new Notice("✅ Selected block copied as inline HTML!");
+	// 	},
+	// });
 }
